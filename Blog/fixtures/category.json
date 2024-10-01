@@ -1,0 +1,23 @@
+[
+  {
+    "model": "Blog.Category",
+    "pk": 1,
+    "fields": {
+      "name": "Nature"
+    }
+  },
+  {
+    "model": "Blog.Category",
+    "pk": 2,
+    "fields": {
+      "name": "Technology"
+    }
+  },
+  {
+    "model": "Blog.Category",
+    "pk": 3,
+    "fields": {
+      "name": "Politics"
+    }
+  }
+]

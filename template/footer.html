@@ -1,0 +1,51 @@
+ {% load custom_tags %}
+  <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container px-md-5">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-4">
+                        <h2 class="ftco-heading-2">Category</h2>
+					{% for i in post %}
+	              <ul class="list-unstyled categories">
+	                <li><a href="#">{{ i.category }}<span>({{ i.category.post_set.count }})</span></a></li>
+	              </ul>
+					{% endfor %}
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Archives </h2>
+                        <ul class="list-unstyled categories">
+                            {% show_archive %}
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Have a Question?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">Summerhill, Shimla </span>
+                                </li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span
+                                        class="text">+91-7876869377</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">tyson3564@gmail.com</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i>
+                        by Sudhanshu </p>
+                </div>
+            </div>
+        </div>
+    </footer>

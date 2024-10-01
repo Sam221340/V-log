@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block mainbar %}
+
+   {% for show in messages %}
+    <div class="alert alert-{{ show.tags }} alert-dismissible fade show" role="alert">
+        <strong>{{ show.tags }}:</strong> {{ show }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endfor %}
+
+
+<div id="colorlib-main">
+    <div class="hero-wrap js-fullheight" style="background-image: url(static/images/bg_1.jpg);"
+         data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="js-fullheight d-flex justify-content-center align-items-center">
+            <div class="col-md-8 text text-center">
+                <div class="img mb-4" style="background-image: url(media/images/Blog_pic.png); background-size: 80%;"></div>
+
+                <div class="desc">
+                    <h2 class="subheading">Hello</h2>
+                    {% if request.user.is_authenticated %}
+
+                    <h1 class="mb-4">{{request.user.username}}</h1>
+                        {% else %}
+                    <h1 class="mb-4"> BOT_USER </h1>
+
+                    <p class="mb-4">I am A Blogger Far far away, behind the word mountains, far from the countries
+                        Vokalia and Consonantia, there live the blind texts.</p>
+                    <p><a href="{%url 'about' %}" class="btn-custom">More About Me <span class="ion-ios-arrow-forward"></span></a></p>
+ {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-2">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2 class="mb-4">Articles</h2>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for i in page_obj.object_list %}
+                <div class="col-md-4">
+
+                    <div class="blog-entry ftco-animate">
+                        <a href="{% url 'post_details' i.id %}" class="img img-2"
+                           style="background-image: url({{i.image.url}});"></a>
+                        <div class="text text-2 pt-2 mt-3">
+                            <span class="category mb-3 d-block"><a href="#">{{i.category}}</a></span>
+                            <h3 class="mb-4"><a href="#">{{i.title}}</a></h3>
+                            <p class="mb-4">{{i.description|slice:":100" }}</p>
+                            <div class="author mb-4 d-flex align-items-center">
+                                <a href="#" class="img" style="background-image: url({{i.author_image.url}});"></a>
+                                <div class="ml-3 info">
+                                    <span>Written by</span>
+                                    <h3><a href="#">{{i.author}}</a>, <span>{{i.created_at}}</span></h3>
+                                </div>
+                            </div>
+                            <div class="meta-wrap align-items-center">
+                                <div class="half order-md-last">
+                                    <p class="meta">
+
+
+                                        {% if request.user in i.like_by.all %}
+                                        <span><a href="{% url 'dislike_post' i.id %}"> <i class="icon-heart"></i></a> {{i.like_by.count}}</span>
+                                        {% else %}
+                                        <span><a href="{% url 'like_post' i.id %}"> <i class="icon-heart"></i></a> {{i.like_by.count}}</span>
+                                        {% endif %}
+                                        <span><i class="icon-eye"></i>{{i.view_counter}}</span>
+
+                                        <span><a href="{% url 'homepage' %}"> <i class="icon-comment"></i></a>5</span>
+                                        {% if request.user.id == i.author.id %}
+
+                                        <span><a href="{% url 'update_post' i.id  %}">Edit</a></span>
+                                         <span><a href="{% url 'delete_post' i.id %}" onclick="return confirm('Are you sure you want to delete this post?') ? true : false;">Delete</a></span>
+
+                                        {% else %}
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+
+                                <div class="half">
+                                    <p><a href="{% url 'post_details' i.id %}" class="btn py-2">Continue Reading <span
+                                            class="ion-ios-arrow-forward"></span></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="block-27">
+                        <ul>
+
+                            <li>{%if page_obj.has_previous %} {# whether the previous page exists #}<a
+                                    href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+                                {% endif %}
+                            </li>
+
+                            <li class="active"><span>{{page_obj.number}}</span></li>
+                            <li>{%if page_obj.has_next %} {# whether the next page exists #}
+                                <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+                                {% endif %}
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  {% include 'footer.html' %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,57 @@
+	<div id="colorlib-page">
+		<a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+		<aside id="colorlib-aside" role="complementary" class="js-fullheight text-center">
+			<h1 id="colorlib-logo"><a href="{% url 'homepage' %} ">V-LOG<span>.</span></a></h1>
+			{% if request.user.is_authenticated %}
+				<a href="{% url 'createblog' %} "> 	<button type="button" class="btn btn-outline-success">Create</button></a>
+				<a href="{% url 'logout' %} "> 	<button type="button" class="btn btn-outline-success">Logout</button></a>
+
+			{% else %}
+			<a href="{% url 'login' %} "> <button type="button" class="btn btn-outline-primary">LOGIN</button></a>
+         <a href="{% url 'signup' %} ">  <button type="button" class="btn btn-outline-secondary">SIGNUP</button></a>
+			{% endif %}
+
+
+
+			<nav id="colorlib-main-menu" role="navigation">
+    <ul>
+        <li class="{% if request.path == '/' %}colorlib-active{% endif %}">
+            <a href="{% url 'homepage' %}">Home</a>
+        </li>
+        <li class="{% if request.path == '/photography' %}colorlib-active{% endif %}">
+            <a href="{% url 'photography' %}">Photography</a>
+        </li>
+        <li class="{% if request.path == '/travel' %}colorlib-active{% endif %}">
+            <a href="{% url 'travel' %}">Travel</a>
+        </li>
+        <li class="{% if request.path == '/fashion' %}colorlib-active{% endif %}">
+            <a href="{% url 'fashion' %}">Fashion</a>
+        </li>
+        <li class="{% if request.path == '/about' %}colorlib-active{% endif %}">
+            <a href="{% url 'about' %}">About</a>
+        </li>
+        <li class="{% if request.path == '/contact' %}colorlib-active{% endif %}">
+            <a href="{% url 'contact' %}">Contact</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="{% if request.path == '/chat_home' %}colorlib-active{% endif %}">
+                <a href="{% url 'chat_home' %}">Chat</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+			<div class="colorlib-footer">
+				<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+			  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Sudhanshu</a>
+				<ul>
+					<li><a href="https://www.facebook.com/sam.bill.9406?mibextid=2JQ9oc"><i class="icon-facebook"></i></a></li>
+					<li><a href="#"><i class="icon-twitter"></i></a></li>
+					<li><a href="https://instagram.com/__.rohitthakur.___?igshid=NGVhN2U2NjQ0Yg=="><i class="icon-instagram"></i></a></li>
+					<li><a href="#"><i class="icon-linkedin"></i></a></li>
+				</ul>
+			</div>
+
+		</aside>
+	</div>

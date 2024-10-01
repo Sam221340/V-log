@@ -1,0 +1,60 @@
+{% extends 'chat_base.html' %}
+{% block title %} Chat Room {% endblock title %}
+{% block content %}
+
+<div>
+    <a href="{% url 'chat_home' %}">home</a>
+</div>
+
+<br>
+
+<div id="chat-log" style="border: 1px solid; width: 500px; height: 400px;">
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message.author }}: {{ message.content }}</p>
+        {% endfor %}
+    {% endif %}
+
+</div>
+
+<br>
+<input id="chat-message-input" type="text" size="60" placeholder="Type a message">
+<br>
+<br>
+
+<input id="chat-message-submit" type="button" value="Send">
+
+<script>
+    base_url = 'ws://' + window.location.hostname + ':' + window.location.port + '/ws/open_chat/' + "{{ uuid }}" + '/';
+    chatSocket = new WebSocket(base_url);
+
+    chatSocket.onmessage = function (event) {
+        let parsed = JSON.parse(event.data);
+        document.querySelector('#chat-log').innerHTML += '<p>' + parsed.message + '</p>';
+    }
+
+    document.querySelector('#chat-message-input').addEventListener('keyup', function (event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    document.querySelector('#chat-message-submit').onclick = function () {
+        sendMessage();
+    };
+
+    function sendMessage() {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value.trim();
+
+        if (message !== '') {
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        }
+    }
+</script>
+
+{% endblock content %}

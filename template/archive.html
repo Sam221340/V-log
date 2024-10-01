@@ -1,0 +1,10 @@
+<!-- archive.html -->
+<ul>
+    {% for month_data in posts_by_month %}
+        <li>
+            <a href="{% url 'posts_by_month' month=month_data.month year=month_data.year %}">
+                {{ month_data.month_name }} {{ month_data.year }} ({{ month_data.post_count }} posts)
+            </a>
+        </li>
+    {% endfor %}
+</ul>

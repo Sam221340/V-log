@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <!-- Bootstrap CSS (you can replace this with your preferred CSS framework or styles) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        h3 {
+
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        form {
+            max-width: 300px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Bootstrap primary color */
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Slightly darker color on hover */
+        }
+
+        .forgot-password-link {
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>{{ message.tags }}:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+    <h3>Log In to your account!</h3>
+    <form method="post" action="{% url 'login' %}" class="mb-2">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Your Username" required>
+        </div>
+        <div class="form-group">
+            <label for="pass1">Password</label>
+            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Your Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+
+    <a href="{% url 'reset_password' %}" class="forgot-password-link">Forgot Password?</a>
+
+    <!-- Bootstrap JS (you can replace this with your preferred JS framework or scripts) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block mainbar %}
+
+
+<div id="colorlib-main">
+    <div class="hero-wrap js-fullheight" style="background-image: url(/static/images/bg_1.jpg);"
+         data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="js-fullheight d-flex justify-content-center align-items-center">
+            <div class="col-md-8 text text-center">
+                <div class="img mb-4" style="background-image: url(/media/images/wp2516222-csgo-wallpapers.jpg);"></div>
+                <div class="desc">
+                    <h2 class="subheading">Hello I'm</h2>
+                    <h1 class="mb-4">Rohit</h1>
+                    <p class="mb-4">I am A Blogger Far far away, behind the word mountains, far from the countries
+                        Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right
+                        at the coast of the Semantics, a large language ocean.</p>
+                    <p><a href="#" class="btn-custom">More About Me <span class="ion-ios-arrow-forward"></span></a></p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-2">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2 class="mb-4">Articles</h2>
+                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It
+                        is a paradisematic country.</p>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for i in posts %}
+                <div class="col-md-4">
+
+                    <div class="blog-entry ftco-animate">
+                        <a href="{% url 'post_details' i.id %}" class="img img-2"
+                           style="background-image: url({{i.image.url}});"></a>
+                        <div class="text text-2 pt-2 mt-3">
+                            <span class="category mb-3 d-block"><a href="#">{{i.category}}</a></span>
+                            <h3 class="mb-4"><a href="#">{{i.title}}</a></h3>
+                            <p class="mb-4">{{i.description|slice:":100" }}</p>
+                            <div class="author mb-4 d-flex align-items-center">
+                                <a href="#" class="img" style="background-image: url({{i.author_image.url}});"></a>
+                                <div class="ml-3 info">
+                                    <span>Written by</span>
+                                    <h3><a href="#">{{i.author}}</a>, <span>{{i.created_at}}</span></h3>
+                                </div>
+                            </div>
+                            <div class="meta-wrap align-items-center">
+                                <div class="half order-md-last">
+                                    <p class="meta">
+
+
+                                        {% if request.user in i.like_by.all %}
+                                        <span><a href="{% url 'dislike_post' i.id %}"> <i class="icon-heart"></i></a> {{i.like_by.count}}</span>
+                                        {% else %}
+                                        <span><a href="{% url 'like_post' i.id %}"> <i class="icon-heart"></i></a> {{i.like_by.count}}</span>
+                                        {% endif %}
+                                        <span><i class="icon-eye"></i>{{i.view_counter}}</span>
+
+                                        <span><a href="{% url 'homepage' %}"> <i class="icon-comment"></i></a>5</span>
+                                        {% if request.user.id == i.author.id %}
+
+                                        <span><a href="{% url 'update_post' i.id  %}">Edit</a></span>
+                                        {% else %}
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+
+                                <div class="half">
+                                    <p><a href="{% url 'post_details' i.id %}" class="btn py-2">Continue Reading <span
+                                            class="ion-ios-arrow-forward"></span></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                {% endfor %}
+
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col">
+                    <div class="block-27">
+                        <ul>
+
+                            <li>{%if page_obj.has_previous %} {# whether the previous page exists #}<a
+                                    href="?page={{page_obj.previous_page_number}}"><</a> {# link to the prev page #}
+                                {% endif %}
+                            </li>
+
+                            <li class="active"><span>{{page_obj.number}}</span></li>
+                            <li>{%if page_obj.has_next %} {# whether the next page exists #}
+                                <a href="?page={{page_obj.next_page_number}}">></a> {# link to the next page #}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container px-md-5">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-4">
+                        <h2 class="ftco-heading-2">Category</h2>
+                        <ul class="list-unstyled categories">
+                            <li><a href="#">Photography <span></span></a></li>
+                            <li><a href="#">Fashion <span></span></a></li>
+                            <li><a href="#">Technology <span></span></a></li>
+                            <li><a href="#">Travel <span></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Archives </h2>
+                        <ul class="list-unstyled categories">
+                            {% show_archive %}
+
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Have a Questions?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">Summerhill, SHIMLA</span>
+                                </li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span
+                                        class="text">+91-7876869377</span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">tyson3564@gmail.com</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                        All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i>
+                        by Sudhanshu
+                       </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1 class="mt-3">Chat Page</h1>
+
+                {% if user.is_authenticated %}
+                    <h2 class="mt-3">Hi, {{ user.username }}!</h2>
+                    <a href="{% url 'logout' %}" class="btn btn-secondary mr-2">Log out</a>
+                    <a href="{% url 'new_group' %}" class="btn btn-secondary">New Group</a>
+                    <a href="{% url 'homepage' %}" class="btn-secondary">Home</a>
+
+                    <ul class="list-group mt-3">
+                        {% for group in groups %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div id="{{ group.uuid }}">
+                                    <a href="{% url 'open_chat' uuid=group.uuid %}">{{ group.uuid }}</a>
+                                </div>
+                                {% if request.user in group.members.all %}
+                                    <div>
+                                        <a href="{% url 'open_chat' uuid=group.uuid %}" class="btn btn-primary btn-sm">Open</a>
+                                        <a href="{% url 'leave_group' uuid=group.uuid %}" class="btn btn-danger btn-sm">Leave</a>
+                                        <a href="{% url 'remove_group' uuid=group.uuid %}" class="btn btn-warning btn-sm">Delete</a>
+                                    </div>
+                                {% else %}
+                                    <div>
+                                        <a href="{% url 'join_group' uuid=group.uuid %}" class="btn btn-success btn-sm">Join</a>
+                                    </div>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                {% else %}
+                    <div class="mt-3">
+                        <h2>You need to login first </h2>
+                        <a href="{% url 'login' %}" class="btn btn-secondary mr-2">Log in</a>
+                        OR
+                        <a href="{% url 'signup' %}" class="btn btn-info">Sign up</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .list-group-item {
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-danger {
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-warning {
+            transition: all 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-success {
+            transition: all 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-info {
+            transition: all 0.3s ease;
+        }
+
+        .btn-info:hover {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+                .btn-info {
+            transition: all 0.3s ease;
+        }
+
+        .btn-info:hover {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+    </style>
+{% endblock content %}

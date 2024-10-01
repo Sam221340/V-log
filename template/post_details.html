@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    		<div id="colorlib-main">
+
+    				<div class="blog-entry ftco-animate">
+							<a href="#" class="img img-2" style="background-image: url('{{post.image.url}}'); background-size: 50%;" ></a>
+
+
+							<div class="text text-2 pt-2 mt-3">
+								<span class="category mb-3 d-block"><a href="#">{{post.category}}</a></span>
+	              <h3 class="mb-4"><a href="#">{{post.title}}</a></h3>
+	              <p class="mb-4">{{post.description}}</p>
+	              <div class="author mb-4 d-flex align-items-center">
+	            		<a href="#" class="img" style="background-image: url({{post.author_image.url}});"></a>
+	            		<div class="ml-3 info">
+	            			<span>Written by</span>
+	            			<h3><a href="#">{{post.author}}</a>, <span>{{post.created_at}}</span></h3>
+	            		</div>
+	            	</div>
+	              <div class="meta-wrap align-items-center">
+
+
+
+	              </div>
+	            </div>
+						</div>
+
+    			</div>
+<style>
+
+</style>
+{% endblock %}
